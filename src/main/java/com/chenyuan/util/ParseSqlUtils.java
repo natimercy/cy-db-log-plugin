@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 public class ParseSqlUtils {
 
     private static final Pattern ENTITY_STR_PATTERN = Pattern.compile("\\s*|\t|\r|\n");
+
+    Pattern pattern = Pattern.compile("(\\\\w+)\\\\(name=')([^']+)\\\\2\\\\s*,\\\\s*(putType=\\\\w+),\\\\s*dataType=([^,]+),\\\\s*value=('[^']+)");
+
     private static final List<String> NEED_QUOTATION_MARKS = new ArrayList<>();
 
     public ParseSqlUtils() {
@@ -30,13 +33,11 @@ public class ParseSqlUtils {
         String parameters = getParams(str);
         List<ParamsEntity> paramsList = paramsToEntity(parameters);
         precompiledSql = handleProceduresWithoutCall(precompiledSql, paramsList);
-        ParamsEntity entity;
         String temp;
         if (CollectionUtils.isNotEmpty(paramsList)) {
             for (ParamsEntity paramsEntity : paramsList) {
-                entity = paramsEntity;
                 temp = StringUtils.isNotBlank(resultSql) ? resultSql : precompiledSql;
-                resultSql = temp.replace(":" + entity.getName(), entity.getValue());
+                resultSql = temp.replace(":" + paramsEntity.getName(), paramsEntity.getValue());
             }
         }
 

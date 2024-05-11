@@ -7,16 +7,58 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>CY DB Log</name>
 
+    <!-- 插件版本 -->
+    <version>1.0.0</version>
+
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="natimercy93@gmail.com" url="https://www.topevery.com/">图元科技</vendor>
+    <vendor email="natimercy93@gmail.com" url="https://plugins.jetbrains.com/author/264a3047-4419-4f4e-9f32-94fc05c5c73b">图元科技</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-  ]]></description>
+    <description>
+        <![CDATA[
+            <p>
+                The ORM framework log plug-in of Topevery Sanitation Division. According to dynamic SQL analysis parameters, directly generate executable SQL.
+            </p>
+            <br/>
+            <p>
+                How to use: Select the precompiled SQL and all parameters in the console, right-click topevery db log to generate, and select all contents in the pop-up box by Ctrl+A.
+            </p>
+
+            <br/>
+
+            <p>
+               尘元环卫ORM框架log插件。根据动态SQL解析参数，直接生成可执行SQL。
+            </p>
+            <br/>
+            <p>
+                使用方法：在控制台选中预编译SQL和所有参数，右键点击“Generate SQL”生成，将弹框中的内容Ctrl+A全选复制即可。
+            </p>
+
+            <br/>
+            <img src="https://img-blog.csdnimg.cn/20201208195524934.gif" width="650" alt="topevery db log"/>
+        ]]>
+    </description>
+
+    <!-- 插件版本变更信息，支持HTML标签；
+     将展示在 settings | Plugins 对话框和插件仓库的Web页面 -->
+    <change-notes>
+        <![CDATA[
+            <p>
+                <b>1.0.0</b>
+                <ul>
+                    <li>优化若干细节</li>
+                </ul>
+            </p>
+
+            <br/>
+        ]]>
+    </change-notes>
+
+    <!-- 插件兼容IDEA的最大和最小 build 号，两个属性可以任选一个或者同时使用
+     官网详细介绍：http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html-->
+    <idea-version since-build="231"/>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -26,12 +68,12 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
-  </extensions>
+    </extensions>
 
     <!-- Actions -->
     <actions>
         <action id="GenerateSqlAction" class="com.chenyuan.action.GenerateSqlAction" text="Generate SQL"
-                description="生成SQL" icon="MyIcons.CHENYUAN_ICON">
+                description="生成SQL" icon="/icons/logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="before" relative-to-action="ConsoleView.ClearAll"/>
         </action>

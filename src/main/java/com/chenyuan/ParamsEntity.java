@@ -15,6 +15,12 @@ public class ParamsEntity {
     public ParamsEntity() {
     }
 
+    public ParamsEntity(String name, String dataType, String value) {
+        this.name = name;
+        this.dataType = dataType;
+        this.value = value;
+    }
+
     public String getName() {
         return this.name;
     }
