@@ -8,6 +8,8 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -18,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class ParseSqlUtils {
 
-    private static final Pattern ENTITY_STR_PATTERN = Pattern.compile("\\s*|\t|\r|\n");
+    private static final Pattern PLACEHOLDERS_PATTERN = Pattern.compile("\\:(\\w+)");
 
     Pattern pattern = Pattern.compile("(\\\\w+)\\\\(name=')([^']+)\\\\2\\\\s*,\\\\s*(putType=\\\\w+),\\\\s*dataType=([^,]+),\\\\s*value=('[^']+)");
 
@@ -33,15 +35,39 @@ public class ParseSqlUtils {
         String parameters = getParams(str);
         List<ParamsEntity> paramsList = paramsToEntity(parameters);
         precompiledSql = handleProceduresWithoutCall(precompiledSql, paramsList);
-        String temp;
         if (CollectionUtils.isNotEmpty(paramsList)) {
-            for (ParamsEntity paramsEntity : paramsList) {
-                temp = StringUtils.isNotBlank(resultSql) ? resultSql : precompiledSql;
-                resultSql = temp.replace(":" + paramsEntity.getName(), paramsEntity.getValue());
-            }
+            return replacePlaceholdersInSql(precompiledSql, paramsList);
         }
 
         return resultSql;
+    }
+
+    public static String replacePlaceholdersInSql(String sqlTemplate, List<ParamsEntity> paramsList) {
+        // 正则表达式匹配形如":identifier"的模式
+        StringBuilder sb = new StringBuilder();
+        Matcher matcher = PLACEHOLDERS_PATTERN.matcher(sqlTemplate);
+        while (matcher.find()) {
+            // 获取匹配到的占位符名称（不包括冒号）
+            String placeholder = matcher.group(1);
+            ParamsEntity paramsEntity = findParamByName(paramsList, placeholder);
+            if (Objects.nonNull(paramsEntity)) {
+                String replacement = paramsEntity.getValue();
+                matcher.appendReplacement(sb, replacement);
+            }
+        }
+
+        // 将剩余的部分添加到StringBuilder中
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    private static ParamsEntity findParamByName(List<ParamsEntity> paramsList, String name) {
+        for (ParamsEntity param : paramsList) {
+            if (param.getName().equals(name)) {
+                return param;
+            }
+        }
+        return null;
     }
 
     private static String getPrecompiledSql(String str) {
