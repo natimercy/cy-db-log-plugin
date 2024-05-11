@@ -15,10 +15,6 @@ repositories {
     //    mavenCentral()
 }
 
-dependencies {
-    implementation group: 'com.github.jsqlparser', name:'jsqlparser', version: '4.5'
-}
-
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
