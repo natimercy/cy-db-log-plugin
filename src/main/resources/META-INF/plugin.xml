@@ -19,11 +19,11 @@
     <description>
         <![CDATA[
             <p>
-                The ORM framework log plug-in of Topevery Sanitation Division. According to dynamic SQL analysis parameters, directly generate executable SQL.
+                The ORM framework log plug-in of ChenYuan Sanitation Division. According to dynamic SQL analysis parameters, directly generate executable SQL.
             </p>
             <br/>
             <p>
-                How to use: Select the precompiled SQL and all parameters in the console, right-click topevery db log to generate, and select all contents in the pop-up box by Ctrl+A.
+                How to use: Select the precompiled SQL and all parameters in the console, right-click cy db log to generate, and select all contents in the pop-up box by Ctrl+A.
             </p>
 
             <br/>
