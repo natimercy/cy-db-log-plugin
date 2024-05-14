@@ -11,7 +11,7 @@
     <version>1.0.0</version>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="natimercy93@gmail.com">natimercy</vendor>
+    <vendor email="natimercy93@gmail.com" url="https://plugins.jetbrains.com/vendor/4534f037-d486-4974-9560-a4e875cd7f36">natimercy</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
