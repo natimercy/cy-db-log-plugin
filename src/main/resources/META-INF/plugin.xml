@@ -79,7 +79,7 @@
     <!-- Actions -->
     <actions>
         <action id="GenerateSqlAction" class="com.chenyuan.action.GenerateSqlAction" text="Generate SQL"
-                description="生成SQL" icon="/icons/logo.svg">
+                description="Generate SQL" icon="/icons/logo.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="before" relative-to-action="ConsoleView.ClearAll"/>
         </action>
