@@ -21,23 +21,15 @@
             <p>
                 The ORM framework log plug-in of ChenYuan Sanitation Division. According to dynamic SQL analysis parameters, directly generate executable SQL.
             </p>
-            <br/>
             <p>
                 How to use: Select the precompiled SQL and all parameters in the console, right-click cy db log to generate, and select all contents in the pop-up box by Ctrl+A.
             </p>
-
-            <br/>
-
             <p>
                尘元环卫ORM框架log插件。根据动态SQL解析参数，直接生成可执行SQL。
             </p>
-            <br/>
             <p>
                 使用方法：在控制台选中预编译SQL和所有参数，右键点击“Generate SQL”生成，将弹框中的内容Ctrl+A全选复制即可。
             </p>
-
-            <br/>
-            <img src="https://img-blog.csdnimg.cn/20201208195524934.gif" width="650" alt="CY DB Log"/>
         ]]>
     </description>
 
@@ -50,14 +42,11 @@
                 <ul>
                     <li>优化若干细节</li>
                 </ul>
-            </p>
-            <p>
                 <b>1.0.1</b>
                 <ul>
                     <li>修复占位符过多导致解析有问题出现异常sql</li>
                 </ul>
             </p>
-
             <br/>
         ]]>
     </change-notes>
