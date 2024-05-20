@@ -22,7 +22,7 @@ public class ParseSqlUtils {
 
     private static final Pattern PLACEHOLDERS_PATTERN = Pattern.compile("\\:(\\w+)");
 
-    Pattern pattern = Pattern.compile("(\\\\w+)\\\\(name=')([^']+)\\\\2\\\\s*,\\\\s*(putType=\\\\w+),\\\\s*dataType=([^,]+),\\\\s*value=('[^']+)");
+    private static final Pattern PATTERN = Pattern.compile("parameter\\(name='([^']*)',[^']*dataType=([^,]*?),[^']*value='([^']*)'");
 
     private static final List<String> NEED_QUOTATION_MARKS = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class ParseSqlUtils {
         String resultSql = "";
         String precompiledSql = getPrecompiledSql(str);
         String parameters = getParams(str);
-        List<ParamsEntity> paramsList = paramsToEntity(parameters);
+        List<ParamsEntity> paramsList = parseParameters(parameters);
         precompiledSql = handleProceduresWithoutCall(precompiledSql, paramsList);
         if (CollectionUtils.isNotEmpty(paramsList)) {
             return replacePlaceholdersInSql(precompiledSql, paramsList);
@@ -108,6 +108,28 @@ public class ParseSqlUtils {
         }
 
         return resultList;
+    }
+
+    private static List<ParamsEntity> parseParameters(String params) {
+        Assert.assertNotNull("解析错误", params);
+        String[] paramsArr = params.split("\n");
+        List<String> paramList = Arrays.stream(paramsArr)
+                .toList();
+
+        List<ParamsEntity> paramsList = new ArrayList<>();
+        paramList.forEach(param -> {
+            Matcher matcher = PATTERN.matcher(param);
+            while (matcher.find()) {
+                String name = matcher.group(1);
+                String dataType = matcher.group(2);
+                // 去除value中的单引号
+                String value = matcher.group(3).replaceFirst("'", "");
+                ParamsEntity entity = new ParamsEntity(name, dataType, value);
+                paramsList.add(entity);
+            }
+        });
+
+        return paramsList;
     }
 
     public static boolean checkStart(String str) {

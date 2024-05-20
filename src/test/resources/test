@@ -1,0 +1,38 @@
+# fixme find_in_set
+p_visualization_person_day_attendance
+		parameter(name='pi_om_dept_id', putType=Input, dataType=VARCHAR, value='578E4961-D269-4A04-A46E-4B59C6A6523E')
+		parameter(name='pi_person_name', putType=Input, dataType=VARCHAR, value='null')
+		parameter(name='pi_begin_index', putType=Input, dataType=INTEGER, value='1')
+		parameter(name='pi_page_size', putType=Input, dataType=INTEGER, value='20')
+		parameter(name='pi_where', putType=Input, dataType=VARCHAR, value=' where 1=1  and find_in_set(c_person_type, '1695E1D5-A83F-4E2E-AB15-F157242679A2,953602D0-B8F8-454D-92E1-F04DFEA69DA9,35E94B00-2707-47ED-8B3F-F6B8BFDEDD18,4B5E8D37-55F8-4007-A13D-A9BFCF232575,DFB0D3E3-BB5D-4CF3-AD03-BD69C267F575')')
+		parameter(name='pi_sort', putType=Input, dataType=VARCHAR, value='null')
+
+# fixme <>
+SELECT record.*,        clazz.c_name          AS c_person_type_name,        dict.c_dict_name      AS c_warning_type_name,        omDept.c_om_dept_name AS c_om_dept_name,        CASE            WHEN record.c_status = 0 THEN '未读'            WHEN record.c_status = 1 THEN '已读'            WHEN record.c_status = 2 THEN '申诉中'            WHEN record.c_status = 3 THEN '申诉驳回'            WHEN record.c_status = 4 THEN '申诉通过'            WHEN record.c_status = 5 THEN '作废'             ELSE '未读' END     AS c_status_name,        ifnull((select count(c_id)         from t_work_warning_allege twwa         where twwa.c_work_warning_id = record.c_work_warning_id           and twwa.c_db_status = 0),0) as c_allege_num,           tr.c_work_content_id,       tr.c_work_begin_time  AS c_start_time,       tr.c_work_end_time    AS c_end_time,       t5.c_contact_tel      AS c_contact_tel FROM t_work_warning_record record  LEFT JOIN t_sys_class clazz ON record.c_person_type = clazz.c_class_id  LEFT JOIN t_sys_dict dict ON record.c_warning_type=dict.c_dict_id  LEFT JOIN t_om_dept omDept ON record.c_om_dept_id = omDept.c_om_dept_id  LEFT JOIN t_person_work_record tr on record.c_work_class_record_id = tr.c_person_record_id and tr.c_db_status = 0  LEFT JOIN t_person t5 on record.c_person_id = t5.c_person_id and t5.c_db_status = 0   WHERE record.c_db_status = :d0  AND  record.c_om_dept_id IN ( :d1, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :d10, :d11, :d12, :d13, :d14, :d15, :d16, :d17, :d18, :d19 )  AND  record.c_person_type IN ( :d20 )  AND  tr.c_work_content_id IN ( :d21, :d22 )  AND  record.c_date = :d23  AND  tr.c_work_date = :d24  AND  record.c_status <> :d25   ORDER BY record.c_warning_time desc LIMIT 0,20;
+SELECT COUNT(1) AS c_data_count FROM t_work_warning_record record  LEFT JOIN t_sys_class clazz ON record.c_person_type = clazz.c_class_id  LEFT JOIN t_sys_dict dict ON record.c_warning_type=dict.c_dict_id  LEFT JOIN t_om_dept omDept ON record.c_om_dept_id = omDept.c_om_dept_id  LEFT JOIN t_person_work_record tr on record.c_work_class_record_id = tr.c_person_record_id and tr.c_db_status = 0  LEFT JOIN t_person t5 on record.c_person_id = t5.c_person_id and t5.c_db_status = 0   WHERE record.c_db_status = :d0  AND  record.c_om_dept_id IN ( :d1, :d2, :d3, :d4, :d5, :d6, :d7, :d8, :d9, :d10, :d11, :d12, :d13, :d14, :d15, :d16, :d17, :d18, :d19 )  AND  record.c_person_type IN ( :d20 )  AND  tr.c_work_content_id IN ( :d21, :d22 )  AND  record.c_date = :d23  AND  tr.c_work_date = :d24  AND  record.c_status <> :d25;
+		parameter(name='d0', putType=Input, dataType=INTEGER, value='0')
+		parameter(name='d1', putType=Input, dataType=VARCHAR, value='578E4961-D269-4A04-A46E-4B59C6A6523E')
+		parameter(name='d2', putType=Input, dataType=VARCHAR, value='3E86B9CA-DE32-4AD6-A152-1E6F891CCD8B')
+		parameter(name='d3', putType=Input, dataType=VARCHAR, value='9BCB0451-5B4C-455B-85CA-318992E8E3B9')
+		parameter(name='d4', putType=Input, dataType=VARCHAR, value='6BB3E73C-7DE0-4F21-9BF3-EE096F09D90D')
+		parameter(name='d5', putType=Input, dataType=VARCHAR, value='B80C7B59-ABC0-4590-9E8C-4D47F9647B49')
+		parameter(name='d6', putType=Input, dataType=VARCHAR, value='E62083F3-30D3-4E7F-80CA-AB0F39BD2AED')
+		parameter(name='d7', putType=Input, dataType=VARCHAR, value='A93376E5-523E-4978-9B66-4CBA85BEA431')
+		parameter(name='d8', putType=Input, dataType=VARCHAR, value='5B6BD13E-7FF6-4675-A688-7933332BF44F')
+		parameter(name='d9', putType=Input, dataType=VARCHAR, value='6EF76D28-7EFD-4ACD-8CB7-491B1ED4F4C9')
+		parameter(name='d10', putType=Input, dataType=VARCHAR, value='2DEDEECC-43A8-444F-AF77-DD9204FC5389')
+		parameter(name='d11', putType=Input, dataType=VARCHAR, value='94F8F5B3-23BE-4930-9C7A-EE9B973C9BC9')
+		parameter(name='d12', putType=Input, dataType=VARCHAR, value='68196974-3683-4A47-A9F6-863472280C9C')
+		parameter(name='d13', putType=Input, dataType=VARCHAR, value='5F4C7D44-5EDD-4FCB-AA75-B2017089EA0A')
+		parameter(name='d14', putType=Input, dataType=VARCHAR, value='AE44241B-2B2D-429C-8A32-AFD298A6031D')
+		parameter(name='d15', putType=Input, dataType=VARCHAR, value='7EB6A41E-1CD5-4646-B2FE-89844C2B29C8')
+		parameter(name='d16', putType=Input, dataType=VARCHAR, value='0289B982-0873-4328-BF08-709E3279EF7C')
+		parameter(name='d17', putType=Input, dataType=VARCHAR, value='B564EFB3-0493-4F44-B76D-C79E4AA33352')
+		parameter(name='d18', putType=Input, dataType=VARCHAR, value='F317F015-212A-4A03-9A43-CB95F1DD6903')
+		parameter(name='d19', putType=Input, dataType=VARCHAR, value='578E4961-D269-4A04-A46E-4B59C6A6523E')
+		parameter(name='d20', putType=Input, dataType=VARCHAR, value='3E380F7C-1F81-4B00-9287-4D79D205F825')
+		parameter(name='d21', putType=Input, dataType=VARCHAR, value='5DF2D85B-1697-11EC-812C-000C2946C002')
+		parameter(name='d22', putType=Input, dataType=VARCHAR, value='7E100E7C-1697-11EC-812C-000C2946C002')
+		parameter(name='d23', putType=Input, dataType=VARCHAR, value='2024-05-16')
+		parameter(name='d24', putType=Input, dataType=VARCHAR, value='2024-05-16')
+		parameter(name='d25', putType=Input, dataType=INTEGER, value='5')
