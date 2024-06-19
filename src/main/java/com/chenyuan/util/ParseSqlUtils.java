@@ -43,6 +43,8 @@ public class ParseSqlUtils {
 
     private static final List<String> NEED_QUOTATION_MARKS = new ArrayList<>();
 
+    private static final List<String> COLUMN_TYPE_STR = Arrays.asList("CHAR", "VARCHAR", "NVARCHAR", "VARCHAR2", "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT");
+
     public ParseSqlUtils() {
     }
 
@@ -69,7 +71,11 @@ public class ParseSqlUtils {
             ParamsEntity paramsEntity = findParamByName(paramsList, placeholder);
             if (Objects.nonNull(paramsEntity)) {
                 String replacement = paramsEntity.getValue();
-                matcher.appendReplacement(sb, replacement);
+                if (COLUMN_TYPE_STR.contains(paramsEntity.getDataType())) {
+                    matcher.appendReplacement(sb, String.join("", "'", replacement, "'"));
+                } else {
+                    matcher.appendReplacement(sb, replacement);
+                }
             }
         }
 
